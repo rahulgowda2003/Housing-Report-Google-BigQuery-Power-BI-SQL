@@ -32,85 +32,84 @@ The dashboard consists of three key pages:
   // to see the data
 
   SELECT *
-FROM 'stalwart-bliss-452720-c7.1.Housing' 
-WHERE 'city' IS NULL;
+  FROM 'stalwart-bliss-452720-c7.1.Housing' 
+  WHERE 'city' IS NULL;
 
   SELECT *
-FROM 'stalwart-bliss-452720-c7.1.Housing' 
-WHERE 'area' IS NULL;
+  FROM 'stalwart-bliss-452720-c7.1.Housing' 
+  WHERE 'area' IS NULL;
 
-// to find rows where a column is null
+  // to find rows where a column is null
 
-SELECT
+  SELECT
   COALESCE('city', "Unknown") AS 'city',
   COALESCE('area', "Unknown") AS 'area'
-FROM 'stalwart-bliss-452720-c7.1.Housing';
+  FROM 'stalwart-bliss-452720-c7.1.Housing';
 
-// found null values in two cloumns and filled null values with "Unknown"
+  // found null values in two cloumns and filled null values with "Unknown"
 
   SELECT *
-FROM 'stalwart-bliss-452720-c7.1.Housing' 
-WHERE 'annual_inflation_rate_%' IS NULL;
+  FROM 'stalwart-bliss-452720-c7.1.Housing' 
+  WHERE 'annual_inflation_rate_%' IS NULL;
 
-SELECT
+  SELECT
   IFNULL('annual_inflation_rate_%', "1.85") AS 'annual_inflation_rate_%'
-FROM 'stalwart-bliss-452720-c7.1.Housing';
+  FROM 'stalwart-bliss-452720-c7.1.Housing';
 
-//found null values in numerical data and filled it with mode
-
+  //found null values in numerical data and filled it with mode
 
 - step 4 : Connected the BigQuery with Power BI Desktop.Opened power query editor and in view tab, under Data preview section, check "column distribution", "column quality" and "column profile" options.
 - step 5 : Created a new table in report view named "Measure's Table 1" to create DAX queries and store them as follows:
 
-a) count of house type = 
-DISTINCTCOUNT('Housing Data'[house_type])
+ a) count of house type = 
+ DISTINCTCOUNT('Housing Data'[house_type])
 
-b) last 12 months sales = 
-CALCULATE(SUM('Housing Data'[purchase_price]),
-DATESINPERIOD('Housing Data'[date],MAX('Housing Data'[date]),-12,MONTH))
+ b) last 12 months sales = 
+ CALCULATE(SUM('Housing Data'[purchase_price]),
+ DATESINPERIOD('Housing Data'[date],MAX('Housing Data'[date]),-12,MONTH))
 
-c) median sales price change = 
-VAR currmedianprice = 
+ c) median sales price change = 
+ VAR currmedianprice = 
     MEDIANX(FILTER('Housing Data',
     YEAR('Housing Data'[date]) = YEAR(MAX('Housing Data'[date]))),
     'Housing Data'[purchase_price])
 
-VAR premedianprice =
+ VAR premedianprice =
     MEDIANX(FILTER('Housing Data',
     YEAR('Housing Data'[date]) = YEAR(MAX('Housing Data'[date])) - 1 ),
     'Housing Data'[purchase_price])
 
-RETURN
+ RETURN
     IF(premedianprice <> 0, (currmedianprice - premedianprice)/premedianprice, BLANK())
 
-d) units sold in latest year && quarter = 
-CALCULATE(DISTINCTCOUNT('Housing Data'[house_id]),
-YEAR('Housing Data'[date]) = YEAR(MAX('Housing Data'[date]))
-&&
-QUARTER('Housing Data'[date]) = QUARTER(MAX('Housing Data'[date])))
+ d) units sold in latest year && quarter = 
+ CALCULATE(DISTINCTCOUNT('Housing Data'[house_id]),
+ YEAR('Housing Data'[date]) = YEAR(MAX('Housing Data'[date]))
+ &&
+ QUARTER('Housing Data'[date]) = QUARTER(MAX('Housing Data'[date])))
 
-e) yoy sales growth = 
-VAR curryear = 
+ e) yoy sales growth = 
+ VAR curryear = 
     CALCULATE(SUM('Housing Data'[purchase_price]),
     YEAR('Housing Data'[date]) = YEAR(MAX('Housing Data'[date])))
-VAR prevyear = 
+ VAR prevyear = 
     CALCULATE(SUM('Housing Data'[purchase_price]),
     YEAR('Housing Data'[date]) = YEAR(MAX('Housing Data'[date])) -1)
-RETURN
+ RETURN
     IF(prevyear <> 0, (curryear - prevyear)/prevyear,BLANK())
 
-f) avg price sqm = 
-AVERAGE('Housing Data'[sqm_price])
+ f) avg price sqm = 
+ AVERAGE('Housing Data'[sqm_price])
 
-g) offer to sqm ratio = 
-DIVIDE(SUM('Housing Data'[offer price]),SUM('Housing Data'[sqm]))
+ g) offer to sqm ratio = 
+ DIVIDE(SUM('Housing Data'[offer price]),SUM('Housing Data'[sqm]))
 
-h) sales by region = 
+ h) sales by region = 
     CALCULATE(SUM('Housing Data'[purchase_price]),
     ALLEXCEPT('Housing Data','Housing Data'[region]))
 
-i) toalytd sales = 
-TOTALYTD(SUM('Housing Data'[purchase_price]),'Housing Data'[date].[Date])
+ i) toalytd sales = 
+ TOTALYTD(SUM('Housing Data'[purchase_price]),'Housing Data'[date].[Date])
 
 - step 6 : Created three page and added canvas backgronud images to each pages for the report, further created two new columns as follows:
 
@@ -125,10 +124,10 @@ TOTALYTD(SUM('Housing Data'[purchase_price]),'Housing Data'[date].[Date])
   New columns
 
   a) offer price = 
-100*'Housing Data'[purchase_price]/(100- 'Housing Data'[%_change_between_offer_and_purchase])
+  100*'Housing Data'[purchase_price]/(100- 'Housing Data'[%_change_between_offer_and_purchase])
 
   b) house age = 
-ABS(YEAR('Housing Data'[date].[Date]) - 'Housing Data'[year_build])
+  ABS(YEAR('Housing Data'[date].[Date]) - 'Housing Data'[year_build])
 
 - step 7 : Created charts and visuals in each page as folows:
 
@@ -166,11 +165,11 @@ ABS(YEAR('Housing Data'[date].[Date]) - 'Housing Data'[year_build])
  - Area
  - Sales type
 
-Three Charts
+ Three Charts
 
-- Average Offer/Purchase Price by House by House Type
-- Average Inflation/Interest/Yield Price by House Type
-- Average Square Meter Price by House Type
+ - Average Offer/Purchase Price by House by House Type
+ - Average Inflation/Interest/Yield Price by House Type
+ - Average Square Meter Price by House Type
 
 ### Report Snapshot (Power BI Desktop)
 
@@ -184,6 +183,7 @@ Three Charts
 ## Insights
 
 a) House Market Overview
+
 1] Median Sales Price Change by City and Region
 
 The bar chart displays how median sales prices vary across different cities, with regions color coded:
