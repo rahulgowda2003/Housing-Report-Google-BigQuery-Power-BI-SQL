@@ -27,7 +27,9 @@ The dashboard consists of three key pages:
 - step 2 : Loaded data into BigQuery and the created dataset named "1" and table named "Housing".
 - step 3 : Opened SQL query in the table mentioned, the query made are as follows:
 
-  SELECT * FROM 'stalwart-bliss-452720-c7.1.Housing' ;  // to see the data
+  SELECT * FROM 'stalwart-bliss-452720-c7.1.Housing' ;
+
+  // to see the data
 
   SELECT *
 FROM 'stalwart-bliss-452720-c7.1.Housing' 
