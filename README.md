@@ -172,11 +172,11 @@ Three Charts
 
 ### Report Snapshot (Power BI Desktop)
 
-![Dashboard_upload]()
+![Dashboard_upload](https://github.com/rahulgowda2003/Housing-Report-Google-BigQuery-Power-BI-SQL/blob/main/House%20Market%20Overview%20Screenshot.png)
 
-![Dashboard_upload]()
+![Dashboard_upload](https://github.com/rahulgowda2003/Housing-Report-Google-BigQuery-Power-BI-SQL/blob/main/Sales%20Performance%20Screenshot.png)
 
-![Dashboard_upload]()
+![Dashboard_upload](https://github.com/rahulgowda2003/Housing-Report-Google-BigQuery-Power-BI-SQL/blob/main/House%20Type%20Analysis%20Screenshot.png)
 
 
 ## Insights
