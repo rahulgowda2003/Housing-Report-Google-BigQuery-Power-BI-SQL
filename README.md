@@ -1,4 +1,4 @@
-# Housing Market Report | Google BigQuery | Power BI | SQL | ChatGPT |
+# Housing Market Report | Google BigQuery | Power BI | SQL | ChatGPT
 
 A multi-page Power BI dashboard analyzing house prices, sales performance, regional trends, house types, and market behavior across Denmark’s housing market.
 
